@@ -4,17 +4,13 @@ import javax.swing.JFrame;
 
 import org.springframework.stereotype.Component;
 
-import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Administrador;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Cliente;
-import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Operativo;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.Optional;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -53,6 +49,7 @@ public class VistaIniciarSesion extends JFrame{
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			boolean bandera = false;
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				nombreDeUsuario = textFieldNombreUsuario.getText();
 				contrasenia = passwordField.getText();

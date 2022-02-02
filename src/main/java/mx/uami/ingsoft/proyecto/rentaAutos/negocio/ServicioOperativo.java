@@ -1,7 +1,5 @@
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,14 @@ public class ServicioOperativo {
 	
 	public Operativo recuperaOperativo(String nombreDeUsuario, String contrasenia) {
 		Operativo operativo = operativoRepository.findByNombreUsuario(nombreDeUsuario);
-		return operativo;
+		if(operativo != null) {
+			if(operativo.getContrasenia().equals(contrasenia)) {
+				return operativo;
+			}else {
+				return null;
+			}
+		}else {
+			return null;
+		}
 	}
-
 }

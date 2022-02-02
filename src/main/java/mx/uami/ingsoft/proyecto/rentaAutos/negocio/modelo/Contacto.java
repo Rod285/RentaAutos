@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -20,14 +21,17 @@ public class Contacto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long IdContacto;
+	private Long idContacto;
 
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String email;
 	
-	@OneToMany(targetEntity = Vehiculo.class,  fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idVehiculo")
-	private List<Vehiculo> vehiculos = new ArrayList<>();
+	@ManyToOne(targetEntity = Operativo.class)
+	@JoinColumn(name = "idOperativo")
+	private Operativo operativo;
+	
+	@OneToMany(mappedBy = "contacto",  fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Vehiculo> vehiculos;
 }

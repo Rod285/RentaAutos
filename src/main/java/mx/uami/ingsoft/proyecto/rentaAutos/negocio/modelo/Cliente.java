@@ -20,16 +20,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Cliente extends Usuario {
 	
-/*	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long IdCliente;*/
-
-	@OneToMany(targetEntity = Pedido.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "idCliente")
-	private List<Pedido> pedidos = new ArrayList<>();
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Pedido> pedidos;
 	
-	@OneToMany(targetEntity = Notificacion.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "idCliente")
-	private List<Notificacion> notificaciones = new ArrayList<>();
+	private List<Notificacion> notificaciones;
 }

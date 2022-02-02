@@ -24,12 +24,11 @@ public class Operativo extends Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long IdOperativo;*/
 	
-	@OneToMany(targetEntity = Contacto.class,  fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idOperativo")
-	private List<PedidoVehiculo> contactos = new ArrayList<>();
-	
-	@OneToMany(targetEntity = Notificacion.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "operativo", cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "idOperativo")
-	private List<Notificacion> notificaciones = new ArrayList<>();
+	private List<Contacto> contactos = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "operativo", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Notificacion> notificaciones;
 }

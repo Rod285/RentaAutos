@@ -24,12 +24,11 @@ public class Administrador extends Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long IdAdmin;*/
 	
-	@OneToMany(targetEntity = Pedido.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "idAdministrador")
+	@OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Pedido> pedidos = new ArrayList<>();
 	
-	@OneToMany(targetEntity = Notificacion.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "idAdministrador")
 	private List<Notificacion> notificaciones = new ArrayList<>();
 }
