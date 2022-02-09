@@ -10,6 +10,7 @@ import mx.uami.ingsoft.proyecto.rentaAutos.negocio.ServicioOperativo;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Administrador;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Cliente;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Operativo;
+import mx.uami.ingsoft.proyecto.rentaAutos.presentacion.agregarUsuario.ControlAgregarUsuario;
 import mx.uami.ingsoft.proyecto.rentaAutos.presentacion.principalCliente.ControlPrincipalCliente;
 import mx.uami.ingsoft.proyecto.rentaAutos.presentacion.principalOperaciones.ControlPrincipalOperaciones;
 
@@ -31,6 +32,9 @@ public class ControlIniciarSesion {
 	
 	@Autowired
 	private ControlPrincipalOperaciones controlOperaciones;
+	
+	@Autowired
+	private ControlAgregarUsuario controlAgregarUsuario;
 	
 	@Autowired
 	private VistaIniciarSesion vista;
@@ -68,12 +72,11 @@ public class ControlIniciarSesion {
 	}
 
 	public void iniciaPrincipalCliente(Cliente cliente) {
-		controlCliente.inicia(cliente);
+		controlCliente.inicia(this, cliente);
 		
 	}
 
-	public void iniciaAgregarUsuario() {
-		// TODO Auto-generated method stub
-		
+	public void iniciaAgregarUsuario(Object cliente) {
+		controlAgregarUsuario.inicia(cliente);	
 	}
 }

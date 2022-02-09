@@ -60,9 +60,13 @@ public class VistaIniciarSesion extends JFrame{
 						if(usuario == null) {
 							muestraDialogoErrorAlIniciarSesion();
 						}else if(usuario.getClass().equals(Cliente.class)) {
+							textFieldNombreUsuario.setText("");
+							passwordField.setText("");
 							control.iniciaPrincipalCliente((Cliente) usuario);
 							setVisible(false);
 						}else {
+							textFieldNombreUsuario.setText("");
+							passwordField.setText("");
 							control.iniciaPrincipalOperaciones(usuario);
 							setVisible(false);
 						}
@@ -70,7 +74,8 @@ public class VistaIniciarSesion extends JFrame{
 				}else {
 					textFieldNombreUsuario.setText("");
 					passwordField.setText("");
-					control.iniciaAgregarUsuario();
+					Cliente cliente = new Cliente();
+					control.iniciaAgregarUsuario((Object) cliente);
 					setVisible(false);
 				}
 			}

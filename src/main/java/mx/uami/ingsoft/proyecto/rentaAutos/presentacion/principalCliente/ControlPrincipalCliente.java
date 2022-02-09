@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.ServicioVehiculo;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Cliente;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Vehiculo;
+import mx.uami.ingsoft.proyecto.rentaAutos.presentacion.iniciarSesion.ControlIniciarSesion;
 
 @Slf4j
 @Component
@@ -26,18 +27,20 @@ public class ControlPrincipalCliente {
 	@Autowired
 	private ServicioVehiculo servicioVehiculo;
 
-	public void inicia(Cliente cliente) {
+	private ControlIniciarSesion controlIniciarSesion;
+
+	public void inicia(ControlIniciarSesion controlIniciarSesion, Cliente cliente) {
+		this.controlIniciarSesion = controlIniciarSesion;
 		List<Vehiculo> listaClasicos = servicioVehiculo.recuperaVehiculosPorTipo(CLASICO);
-		if(listaClasicos == null) {
-			ventana.muestraDialogoListaVacía();
-		}
-		log.info("en control");
-		log.info("modelo: " + listaClasicos.get(0).getModelo());
 		List<Vehiculo> listaLujo = servicioVehiculo.recuperaVehiculosPorTipo(LUJO);
 		List<Vehiculo> listaDeportivos = servicioVehiculo.recuperaVehiculosPorTipo(DEPORTIVO);
 		List<Vehiculo> listaCarga = servicioVehiculo.recuperaVehiculosPorTipo(CARGA);
 		
 		ventana.muestra(this, cliente, listaClasicos, listaLujo, listaDeportivos, listaCarga);
+	}
+
+	public void volverAIniciarSesion() {
+		controlIniciarSesion.inicia();
 	}
 
 }

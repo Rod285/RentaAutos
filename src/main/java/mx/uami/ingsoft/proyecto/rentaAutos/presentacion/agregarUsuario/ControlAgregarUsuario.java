@@ -22,5 +22,10 @@ public class ControlAgregarUsuario {
 	private ServicioOperativo servicioOperativo;
 	
 	@Autowired
-	private VistaAgregarUsuario vista;
+	private VistaAgregarUsuario ventana;
+
+	public void inicia(Object usuario) {
+		ventana.muestra(this, usuario);
+		
+	}
 }
