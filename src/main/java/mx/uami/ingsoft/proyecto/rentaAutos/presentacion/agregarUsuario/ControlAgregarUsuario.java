@@ -1,3 +1,9 @@
+/*
+ * SourceFile: ControlAgregarUsuario
+ * Description: Class who manages the interaction flow of User Story Agregar Usuario
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.presentacion.agregarUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +30,13 @@ public class ControlAgregarUsuario {
 	@Autowired
 	private VistaAgregarUsuario ventana;
 
+	/*
+	 * Description: Method who initializes the User Story Agregar Usuario
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: Object usuario
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void inicia(Object usuario) {
 		ventana.muestra(this, usuario);
 		

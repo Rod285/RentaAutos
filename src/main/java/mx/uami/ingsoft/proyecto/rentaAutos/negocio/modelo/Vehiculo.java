@@ -1,6 +1,11 @@
+/*
+ * SourceFile: Vehiculo
+ * Description: Class who manages the actions and attributes of the entity Vehiculo
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -34,6 +39,7 @@ public class Vehiculo {
 	@JoinColumn(name = "idContacto")
 	private Contacto contacto;
 	
-	@OneToMany(mappedBy = "vehiculo", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "vehiculo", fetch = FetchType.EAGER
+				, cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<PedidoVehiculo> pedidoVehiculos;	
 }

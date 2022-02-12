@@ -1,3 +1,9 @@
+/*
+ * SourceFile: RentaAutosApplication
+ * Description: Class who launches the application
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos;
 
 import javax.annotation.PostConstruct;
@@ -22,10 +28,15 @@ public class RentaAutosApplication {
 		builder.run(args);
 	}
 	
+	/*
+	 * Description: Method who initializes the User Story Iniciar Sesión
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	@PostConstruct
 	public void inicia() {
-		
-	//	initializesBD();
 		
 		controlIniciarSesion.inicia();
 	}

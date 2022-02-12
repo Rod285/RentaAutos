@@ -1,3 +1,9 @@
+/*
+ * SourceFile: ControlIniciarSesion
+ * Description: Class who manages the interaction flow of User Story Iniciar Sesión
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.presentacion.iniciarSesion;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +49,16 @@ public class ControlIniciarSesion {
 		vista.muestra(this);
 	}
 
+	/*
+	 * Description: Method who determines the kind of user that is recovered
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: String nombreDeUsuario, String contrasenia
+	 * Return Value: Object
+	 * Date: 12/02/2022
+	 */
 	public Object validaUsuario(String nombreDeUsuario, String contrasenia) {
-		Administrador admin = servicioAdministrador.recuperaAdministrador(nombreDeUsuario, contrasenia);
+		Administrador admin = servicioAdministrador
+								.recuperaAdministrador(nombreDeUsuario, contrasenia);
 		if(admin != null) {
 			System.out.println("Es administrador " + admin.getClass().toString());
 			return admin;
@@ -66,17 +80,38 @@ public class ControlIniciarSesion {
 		}
 	}
 
+	/*
+	 * Description: Method who initializes operations principal window
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: Object usuario
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void iniciaPrincipalOperaciones(Object usuario) {
-		controlOperaciones.inicia(usuario);
+		controlOperaciones.inicia(this, usuario);
 		
 	}
 
+	/*
+	 * Description: Method who initializes clients principal window
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: Cliente cliente
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void iniciaPrincipalCliente(Cliente cliente) {
 		controlCliente.inicia(this, cliente);
 		
 	}
 
-	public void iniciaAgregarUsuario(Object cliente) {
-		controlAgregarUsuario.inicia(cliente);	
+	/*
+	 * Description: Method who initializes User Story Agregar Usuario
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: Object usuario
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
+	public void iniciaAgregarUsuario(Object usuario) {
+		controlAgregarUsuario.inicia(usuario);	
 	}
 }

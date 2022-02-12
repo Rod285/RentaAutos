@@ -1,3 +1,9 @@
+/*
+ * SourceFile: VistaAgregarUsuario
+ * Description: Class who manages the rendering of the view for User Story Agregar Usuario
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.presentacion.agregarUsuario;
 
 import javax.swing.JFrame;
@@ -123,7 +129,8 @@ public class VistaAgregarUsuario extends JFrame{
 		getContentPane().add(textField);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Edad", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Edad"
+						, TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		panel.setBounds(30, 105, 420, 50);
 		getContentPane().add(panel);
 		panel.setLayout(null);
@@ -168,6 +175,13 @@ public class VistaAgregarUsuario extends JFrame{
 		getContentPane().add(btnCancelar);
 	}
 
+	/*
+	 * Description: Method who initializes components and the view of User Story Agregar Usuario
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: ControlAgregarUsuario controlAgregarUsuario, Object usuario
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void muestra(ControlAgregarUsuario controlAgregarUsuario, Object usuario) {
 		this.control = controlAgregarUsuario;
 		this.usuario = usuario;
@@ -190,7 +204,8 @@ public class VistaAgregarUsuario extends JFrame{
 		comboBoxAnio.setModel(modeloAnio);
 		
 		for(int i = 1; i <= MAX_MESES; i++) {
-			modeloMes.addElement(LocalDate.of(i, i, i).getMonth().getDisplayName(TextStyle.FULL, new Locale("es", "ES")).toUpperCase());
+			modeloMes.addElement(LocalDate.of(i, i, i).getMonth().getDisplayName(
+								TextStyle.FULL, new Locale("es", "ES")).toUpperCase());
 		}
 		
 		comboBoxMes.setModel(modeloMes);

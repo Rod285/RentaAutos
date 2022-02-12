@@ -1,3 +1,9 @@
+/*
+ * SourceFile: VistaPrincipalCliente
+ * Description: Class who manages the rendering of the principal view for clients
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.presentacion.principalCliente;
 
 import javax.swing.JFrame;
@@ -7,6 +13,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Cliente;
 import mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo.Vehiculo;
+import mx.uami.ingsoft.proyecto.rentaAutos.presentacion.ModeloCalendario;
 
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -18,6 +25,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
@@ -26,6 +34,7 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JScrollPane;
 
 @Slf4j
 @SuppressWarnings("serial")
@@ -34,11 +43,11 @@ public class VistaPrincipalCliente extends JFrame{
 
 	private ControlPrincipalCliente control;
 	private Cliente cliente;
-	JComboBox<String> comboBoxSeleccion;
+	private List<Vehiculo> listaPedido;
+	private JComboBox<String> comboBoxSeleccion;
 	private JTextField textFieldBusqueda;
 	private JLabel lblCliente;
-	private List<Vehiculo> listaPedido;
-	private JTable table;
+	private JTable tablaCalendario;
 	private JLabel lblFoto;
 	private JTextField textFieldModelo;
 	private JButton btnAgregarAPedido;
@@ -72,8 +81,9 @@ public class VistaPrincipalCliente extends JFrame{
 		getContentPane().add(btnIrAPedido);
 		
 		JLabel lblLogo = new JLabel();
-		lblLogo.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("\\fotos\\backend.png"))
-						.getImage().getScaledInstance(120, 100, Image.SCALE_SMOOTH)));
+		lblLogo.setIcon(new ImageIcon(new ImageIcon(getClass()
+						.getResource("\\fotos\\backend.png")).getImage()
+						.getScaledInstance(120, 100, Image.SCALE_SMOOTH)));
 		lblLogo.setBounds(10, 10, 120, 100);
 		getContentPane().add(lblLogo);
 		
@@ -88,10 +98,6 @@ public class VistaPrincipalCliente extends JFrame{
 		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCliente.setBounds(330, 40, 150, 40);
 		getContentPane().add(lblCliente);
-		
-		table = new JTable();
-		table.setBounds(10, 175, 126, 150);
-		getContentPane().add(table);
 		
 		lblFoto = new JLabel("");
 		lblFoto.setBounds(220, 180, 320, 180);
@@ -159,7 +165,7 @@ public class VistaPrincipalCliente extends JFrame{
 		textFieldMes = new JTextField();
 		textFieldMes.setEditable(false);
 		textFieldMes.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldMes.setBounds(10, 150, 126, 25);
+		textFieldMes.setBounds(10, 155, 126, 25);
 		getContentPane().add(textFieldMes);
 		textFieldMes.setColumns(10);
 		
@@ -193,8 +199,9 @@ public class VistaPrincipalCliente extends JFrame{
 		getContentPane().add(lblCategorias);
 		
 		JButton btnCerrarSesion = new JButton();
-		btnCerrarSesion.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("\\fotos\\shutdown.png"))
-								.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+		btnCerrarSesion.setIcon(new ImageIcon(new ImageIcon(getClass()
+								.getResource("\\fotos\\logOut.png")).getImage()
+								.getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
 		btnCerrarSesion.setBounds(58, 358, 30, 30);
 		btnCerrarSesion.setToolTipText("Presione para cerrar sesión");
 		btnCerrarSesion.addActionListener(new ActionListener() {
@@ -211,8 +218,30 @@ public class VistaPrincipalCliente extends JFrame{
 			
 		});
 		getContentPane().add(btnCerrarSesion);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 180, 126, 148);
+		
+		
+		tablaCalendario = new JTable();
+		tablaCalendario.setRowHeight(25);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
+		tablaCalendario.setDefaultRenderer(String.class, centerRenderer);
+		tablaCalendario.setDefaultRenderer(Integer.class, centerRenderer);
+		scrollPane.setViewportView(tablaCalendario);
+		getContentPane().add(scrollPane);
 	}
 
+	/*
+	 * Description: Method that initializes components and the principal view for clients 
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: ControlPrincipalCliente controlPrincipalCliente, Cliente cliente
+						, List<Vehiculo> listaClasicos, List<Vehiculo> listaLujo
+						, List<Vehiculo> listaDeportivos, List<Vehiculo> listaCarga
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void muestra(ControlPrincipalCliente controlPrincipalCliente, Cliente cliente
 						, List<Vehiculo> listaClasicos, List<Vehiculo> listaLujo
 						, List<Vehiculo> listaDeportivos, List<Vehiculo> listaCarga) {
@@ -224,28 +253,33 @@ public class VistaPrincipalCliente extends JFrame{
 		this.listaCarga = listaCarga;
 		
 		lblCliente.setText(cliente.getNombreUsuario());
-		textFieldMes.setText(LocalDate.now().getMonth()
-						.getDisplayName(TextStyle.FULL, new Locale("es", "ES")).toUpperCase());
+		textFieldMes.setText(LocalDate.now().getMonth().getDisplayName(
+							TextStyle.FULL, new Locale("es", "ES")).toUpperCase());
 		
 		log.info("En vista");
 		log.info("tamaño lista: " + listaClasicos.size());
 		log.info(listaClasicos.get(0).getFoto());
 		
-		comboBoxSeleccion.setModel(new DefaultComboBoxModel<String>(new String[] {"Clásico", "Lujo", "Deportivo", "Carga"}));
+		comboBoxSeleccion.setModel(new DefaultComboBoxModel<String>(
+									new String[] {"Clásico", "Lujo", "Deportivo", "Carga"}));
 		
 		cargaPrimerVehiculo(listaClasicos);
 		
 		indice = 0;
+		ModeloCalendario modeloCalendario = new ModeloCalendario();
+		tablaCalendario.setModel(modeloCalendario);
 		
 		setVisible(true);
 	}
 	
-	private int dialogoConfirmaCerrarSesion() {
-		int seleccion = JOptionPane.showOptionDialog(null, "¿Desea cerrar sesión?", "Cerrar sesión",
-													0, 3, null, new Object[] {"SI", "NO"}, null);
-		return seleccion;
-	}
-	
+	/*
+	 * Description: Method when the user selects a category of vehicles load the photo of the first
+	 * 				vehicle in the category's list
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: List<Vehiculo> lista
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	private void cargaPrimerVehiculo(List<Vehiculo> lista) {
 		try {
 			lblFoto.setIcon(new ImageIcon(new ImageIcon(getClass()
@@ -258,6 +292,13 @@ public class VistaPrincipalCliente extends JFrame{
 		}
 	}
 	
+	/*
+	 * Description: Method that shows the previous vehicle in the list of vehicles
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: List<Vehiculo> lista, int indice
+	 * Return Value: int
+	 * Date: 12/02/2022
+	 */
 	private int muestraVehiculoAnterior(List<Vehiculo> lista, int indice) {
 		if (indice == 0) {
 			indice = lista.size() - 1;
@@ -286,7 +327,11 @@ public class VistaPrincipalCliente extends JFrame{
 	}
 
 	/*
-	 * Método que desplaza al vehículo siguiente el slide de vehiculos
+	 * Description: Method that shows the next vehicle in the list of vehicles
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: List<Vehiculo> lista, int indice
+	 * Return Value: int
+	 * Date: 12/02/2022
 	 */
 	private int muestraVehiculoSiguiente(List<Vehiculo> lista, int indice) {
 		if (indice == lista.size() - 1) {
@@ -315,17 +360,53 @@ public class VistaPrincipalCliente extends JFrame{
 		return indice;
 	}
 	
+	/*
+	 * Description: Method that shows a default image for not found photos of vehicles
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	private void estableceImagenNoDisponible() {
 		lblFoto.setIcon(new ImageIcon(new ImageIcon(getClass()
 				.getResource("\\fotos\\imagenNoDisponible.jpg"))
 				.getImage().getScaledInstance(320, 180, Image.SCALE_SMOOTH)));
 	}
 
-	private void muestraDialogoCategoriaVacía() {
-		JOptionPane.showMessageDialog(null, "Disculpe, por el momento no contamos con modelos de esa categoría");
+	/*
+	 * Description: Method that shows message to confirm or cancel to log out
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: int
+	 * Date: 12/02/2022
+	 */
+	private int dialogoConfirmaCerrarSesion() {
+		int seleccion = JOptionPane.showOptionDialog(null, "¿Desea cerrar sesión?", "Cerrar sesión"
+													,0, 3, null, new Object[] {"SI", "NO"}, null);
+		return seleccion;
 	}
 	
+	/*
+	 * Description: Method that shows message to inform there isn't this kind of vehicle
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
+	private void muestraDialogoCategoriaVacía() {
+		JOptionPane.showMessageDialog(null, "Disculpe, por el momento no contamos"
+										+ " con modelos de esa categoría");
+	}
+	
+	/*
+	 * Description: Method that shows message to inform the vehicle's photo was not found 
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: String modelo
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	private void muestraDialogoErrorImagen(String modelo) {
-		JOptionPane.showMessageDialog(null, "La imagen del vehiculo " + modelo + " tuvo problemas al cargarse");
+		JOptionPane.showMessageDialog(null, "La imagen del vehiculo " + modelo 
+										+ " tuvo problemas al cargarse");
 	}
 }

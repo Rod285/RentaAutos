@@ -1,3 +1,9 @@
+/*
+ * SourceFile: ServicioOperativo
+ * Description: Class who manages the actions and rules of business for the entity Operativo
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +20,14 @@ public class ServicioOperativo {
 	@Autowired
 	private OperativoRepository operativoRepository;
 	
+	/*
+	 * Description: Method who calls operativoRepository to find an operator by opetarive's name
+	 * 				and validates the its password
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: String nombreDeUsuario, String contrasenia
+	 * Return Value: Administrador
+	 * Date: 12/02/2022
+	 */
 	public Operativo recuperaOperativo(String nombreDeUsuario, String contrasenia) {
 		Operativo operativo = operativoRepository.findByNombreUsuario(nombreDeUsuario);
 		if(operativo != null) {

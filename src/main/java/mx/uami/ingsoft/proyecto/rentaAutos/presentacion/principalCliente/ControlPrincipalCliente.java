@@ -1,3 +1,9 @@
+/*
+ * SourceFile: ControlPrincipalCliente
+ * Description: Class who manages the interaction flow of user type Cliente activities
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.presentacion.principalCliente;
 
 import java.util.List;
@@ -29,6 +35,14 @@ public class ControlPrincipalCliente {
 
 	private ControlIniciarSesion controlIniciarSesion;
 
+	/*
+	 * Description: Method that initializes and manage the flow of user's interaction with client's
+	 * 				principal view. Recovers the vehicle's list of each category
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: ControlIniciarSesion controlIniciarSesion, Cliente cliente
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void inicia(ControlIniciarSesion controlIniciarSesion, Cliente cliente) {
 		this.controlIniciarSesion = controlIniciarSesion;
 		List<Vehiculo> listaClasicos = servicioVehiculo.recuperaVehiculosPorTipo(CLASICO);
@@ -39,6 +53,13 @@ public class ControlPrincipalCliente {
 		ventana.muestra(this, cliente, listaClasicos, listaLujo, listaDeportivos, listaCarga);
 	}
 
+	/*
+	 * Description: Method that initializes again User Story Iniciar Sesión, when a user log out
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void volverAIniciarSesion() {
 		controlIniciarSesion.inicia();
 	}

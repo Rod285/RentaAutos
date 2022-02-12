@@ -1,3 +1,9 @@
+/*
+ * SourceFile: PedidoVehiculo
+ * Description: Class who manages the actions and attributes of the entity PedidoVehiculo
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo;
 
 import javax.persistence.Entity;

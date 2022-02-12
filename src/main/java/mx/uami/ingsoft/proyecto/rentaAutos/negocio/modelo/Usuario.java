@@ -1,3 +1,9 @@
+/*
+ * SourceFile: Usuario
+ * Description: Superclass who manages the actions and attributes of the entity Usuario
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio.modelo;
 
 import javax.persistence.GeneratedValue;

@@ -1,3 +1,9 @@
+/*
+ * SourceFile: ServicioAdministrador
+ * Description: Class who manages the actions and rules of business for the entity Administrador
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +20,14 @@ public class ServicioAdministrador {
 	@Autowired
 	private AdministradorRepository administradorRepository;
 
+	/*
+	 * Description: Method who calls administradorRepository to find an administrator
+	 * 				by user's name and validates the its password
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: String nombreDeUsuario, String contrasenia
+	 * Return Value: Administrador
+	 * Date: 12/02/2022
+	 */
 	public Administrador recuperaAdministrador(String nombreDeUsuario, String contrasenia) {
 		Administrador admin = administradorRepository.findByNombreUsuario(nombreDeUsuario);
 		System.out.println("Contraseña introducida: " + contrasenia);

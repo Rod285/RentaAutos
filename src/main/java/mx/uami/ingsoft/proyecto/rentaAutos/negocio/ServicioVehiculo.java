@@ -1,3 +1,9 @@
+/*
+ * SourceFile: ServicioVehiculo
+ * Description: Class who manages the actions and rules of business for the entity Vehiculo
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.negocio;
 
 import java.util.ArrayList;
@@ -19,6 +25,14 @@ public class ServicioVehiculo {
 	@Autowired
 	private VehiculoRepository vehiculoRepository;
 
+	/*
+	 * Description: Method who calls vehiculoRepository to find all vehicles of a kind
+	 * 				and validates if the list is empty, if the list is empty returns null
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: String tipo
+	 * Return Value: List<Vehiculos>, null
+	 * Date: 12/02/2022
+	 */
 	public List<Vehiculo> recuperaVehiculosPorTipo(String tipo) {
 		List<Vehiculo> listaRecuperada = new ArrayList<>();
 		listaRecuperada = vehiculoRepository.findByTipo(tipo);

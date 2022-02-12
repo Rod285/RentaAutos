@@ -1,3 +1,9 @@
+/*
+ * SourceFile: VistaIniciarSesion
+ * Description: Class who manages the rendering of the User Story Iniciar Sesión
+ * Author: Mejía Velázquez José Rodrigo
+ * Date: 12/02/2022
+ */
 package mx.uami.ingsoft.proyecto.rentaAutos.presentacion.iniciarSesion;
 
 import javax.swing.JFrame;
@@ -9,12 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import java.awt.Image;
 
 @SuppressWarnings("serial")
 @Component
@@ -32,6 +40,12 @@ public class VistaIniciarSesion extends JFrame{
 		getContentPane().setBackground(Color.WHITE);
 		setBounds(100, 100, 400, 300);
 		getContentPane().setLayout(null);
+		
+		JLabel lblLogo = new JLabel();
+		lblLogo.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("\\backend.png"))
+						.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		lblLogo.setBounds(40, 15, 60, 60);
+		getContentPane().add(lblLogo);
 		
 		textFieldNombreUsuario = new JTextField();
 		textFieldNombreUsuario.setBounds(185, 90, 150, 25);
@@ -83,12 +97,55 @@ public class VistaIniciarSesion extends JFrame{
 		btnAceptar.setBounds(38, 225, 90, 25);
 		getContentPane().add(btnAceptar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(245, 225, 90, 25);
-		getContentPane().add(btnCancelar);
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int seleccion = 0;
+				seleccion = dialogoConfirmacionSalir();
+				if(seleccion == 0) {
+					setVisible(false);
+					System.exit(0);
+				}
+			}
+			
+		});
+		btnSalir.setBounds(245, 225, 90, 25);
+		getContentPane().add(btnSalir);
 		
-		chkboxClienteNuevo = new JCheckBox("Registro como \r\ncliente nuevo");
-		chkboxClienteNuevo.setToolTipText("Seleccione esta casilla si no cuenta con una cuenta de usuario \n y desea crear una");
+		chkboxClienteNuevo = new JCheckBox("Registro como cliente nuevo");
+		chkboxClienteNuevo.addActionListener(new ActionListener() {
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int seleccion = 0;
+				
+				if(chkboxClienteNuevo.isSelected()) {
+					if(!textFieldNombreUsuario.getText().equals("") 
+						|| !passwordField.getText().equals("")) {
+						
+						seleccion = dialogoConfirmarSeleccionCasilla();
+					}
+					if(seleccion == 0) {
+						textFieldNombreUsuario.setText("");
+						textFieldNombreUsuario.setEnabled(false);
+						passwordField.setText("");
+						passwordField.setEnabled(false);
+					}else {
+						chkboxClienteNuevo.setSelected(false);
+						textFieldNombreUsuario.setEnabled(true);
+						passwordField.setEnabled(true);
+					}
+				}else {
+					textFieldNombreUsuario.setEnabled(true);
+					passwordField.setEnabled(true);
+				}	
+			}
+		});
+		chkboxClienteNuevo.setToolTipText("Seleccione esta casilla si no posee una cuenta"
+											+ " de usuario y desea crear una");
 		chkboxClienteNuevo.setBackground(Color.WHITE);
 		chkboxClienteNuevo.setBounds(34, 185, 190, 25);
 		getContentPane().add(chkboxClienteNuevo);
@@ -97,36 +154,91 @@ public class VistaIniciarSesion extends JFrame{
 		passwordField.setBounds(185, 140, 150, 25);
 		getContentPane().add(passwordField);
 		
-		JLabel lblLogo = new JLabel("Logo");
-		lblLogo.setBounds(40, 15, 60, 60);
-		getContentPane().add(lblLogo);
-		
 		JLabel lblTitulo = new JLabel("Inicio de Sesión");
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setBounds(150, 31, 150, 25);
 		getContentPane().add(lblTitulo);
 	}
-	
+
+	/*
+	 * Description: Method who initializes the view for User Story Iniciar Sesión
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: ControlIniciarSesion controlIniciarSesion
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	public void muestra(ControlIniciarSesion controlIniciarSesion) {
 		this.control = controlIniciarSesion;
 		setVisible(true);
 	}
 	
+	/*
+	 * Description: Method that validates if the text fields user´s name and password are not empty
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: String nombreDeUsuario, String contrasenia
+	 * Return Value: boolean
+	 * Date: 12/02/2022
+	 */
 	public boolean validaCampos(String nombreDeUsuario, String contrasenia) {
-		if((nombreDeUsuario == null || contrasenia == null) || (nombreDeUsuario.equals("") || contrasenia.equals(""))){
+		if((nombreDeUsuario == null || contrasenia == null) || (nombreDeUsuario.equals("") 
+			|| contrasenia.equals(""))){
+			
 			muestraDialogoCamposVacios();
 			return false;
 		}else {
 			return true;
 		}
 	}
-
+	
+	/*
+	 * Description: Method who shows message to confirm or cancel to leave the application
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: int
+	 * Date: 12/02/2022
+	 */
+	private int dialogoConfirmacionSalir() {
+		int seleccion = JOptionPane.showOptionDialog(null, "¿Desea salir?", "Salir", 0, 3,
+													null, new Object[] {"SI", "NO"}, null);
+		return seleccion;
+	}
+	
+	/*
+	 * Description: Method that shows a message which informs the user has not found 
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	private void muestraDialogoErrorAlIniciarSesion() {
-		JOptionPane.showMessageDialog(null, "El usuario no fue encontrado, por favor revise el nombre de usuario y contraseña."
-				+ " Si no se encuentra registrado, seleccione la casilla Registrar como cliente nuevo y a continuación de click en aceptar");	
+		JOptionPane.showMessageDialog(null, "El usuario no fue encontrado, por favor revise"
+										+ " el nombre de usuario y contraseña.");	
 	}
 
+	/*
+	 * Description: Method that shows a message which informs user that fields are empty 
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: void
+	 * Date: 12/02/2022
+	 */
 	private void muestraDialogoCamposVacios() {
-		JOptionPane.showMessageDialog(null, "Los campos nombre de usuario y/o contraseña no deben estar vacios");
+		JOptionPane.showMessageDialog(null, "Los campos nombre de usuario y/o "
+										+ "contraseña no deben estar vacios");
+	}
+	
+	/*
+	 * Description: Method that shows a message which informs the user selection of checkbox
+	 * 				will erase the information in the text fields
+	 * Author: Mejía Velázquez José Rodrigo
+	 * Parameters: void
+	 * Return Value: int
+	 * Date: 12/02/2022
+	 */
+	private int dialogoConfirmarSeleccionCasilla() {
+		int seleccion = JOptionPane.showOptionDialog(null, "Se borraran datos en formulario"
+														, "Crear Cuenta Nueva",	0, 3, null
+														, new Object[] {"SI", "NO"}, null);
+		return seleccion;
 	}
 }
